@@ -41,7 +41,11 @@ public class Invoice {
     }
 
     public BigDecimal getTax() {
-        return null;
+            BigDecimal tax = BigDecimal.ZERO;
+            for (Product product : products) {
+                tax = tax.add(product.getTaxPercent().multiply(product.getPrice()));
+            }
+            return tax;
     }
 
     public BigDecimal getTotal() {
