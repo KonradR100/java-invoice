@@ -9,6 +9,12 @@ import pl.edu.agh.mwo.invoice.product.Product;
 public class Invoice {
     private Collection<Product> products;
 
+
+    //Tworzymy pustą listę produktów
+    {
+        products = new ArrayList<>();
+    }
+
     public void addProduct(Product product) {
         addProduct(product, 1);
     }
@@ -16,9 +22,6 @@ public class Invoice {
     public void addProduct(Product product, Integer quantity) {
         if (product != null) {
             if (quantity > 0) {
-                if (products == null) {
-                    products = new ArrayList<>();
-                }
                 for (int i = 0; i < quantity; i++) {
                     products.add(product);
                 }
@@ -49,6 +52,10 @@ public class Invoice {
     }
 
     public BigDecimal getTotal() {
-        return null;
+        BigDecimal total = BigDecimal.ZERO;
+        for (Product product : products) {
+            total = total.add(product.getPriceWithTax());
+        }
+        return total;
     }
 }
