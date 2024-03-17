@@ -9,6 +9,13 @@ import pl.edu.agh.mwo.invoice.product.Product;
 public class Invoice {
     private Map<Product, Integer> products = new HashMap<Product, Integer>();
 
+    private final int number;
+
+    private static int invoiceCount = 0;
+    public Invoice(){
+        this.number = ++invoiceCount;
+
+    }
     public void addProduct(Product product) {
         addProduct(product, 1);
     }
@@ -41,4 +48,12 @@ public class Invoice {
         }
         return totalGross;
     }
+
+    public int getNumber() {
+        return number;
+    }
+
+    //metoda w fakturze, która zwraca Stringa
+    //w teście asercje
+
 }
