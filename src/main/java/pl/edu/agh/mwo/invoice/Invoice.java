@@ -14,7 +14,6 @@ public class Invoice {
     private static int invoiceCount = 0;
     public Invoice(){
         this.number = ++invoiceCount;
-
     }
     public void addProduct(Product product) {
         addProduct(product, 1);
