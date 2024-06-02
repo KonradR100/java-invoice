@@ -54,7 +54,4 @@ public class Invoice {
         return number;
     }
 
-    //metoda w fakturze, która zwraca Stringa
-    //w teście asercje
-
 }
