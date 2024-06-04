@@ -1,6 +1,8 @@
 package pl.edu.agh.mwo.invoice;
 
 import java.math.BigDecimal;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -12,6 +14,9 @@ import pl.edu.agh.mwo.invoice.product.DairyProduct;
 import pl.edu.agh.mwo.invoice.product.OtherProduct;
 import pl.edu.agh.mwo.invoice.product.Product;
 import pl.edu.agh.mwo.invoice.product.TaxFreeProduct;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class InvoiceTest {
     private Invoice invoice;
@@ -111,6 +116,8 @@ public class InvoiceTest {
         Assert.assertThat(new BigDecimal("54.70"), Matchers.comparesEqualTo(invoice.getGrossTotal()));
     }
 
+
+
     @Test(expected = IllegalArgumentException.class)
     public void testInvoiceWithZeroQuantity() {
         invoice.addProduct(new TaxFreeProduct("Tablet", new BigDecimal("1678")), 0);
@@ -141,5 +148,30 @@ public class InvoiceTest {
         int number1 = new Invoice().getNumber();
         int number2 = new Invoice().getNumber();
         Assert.assertTrue(number2 > number1);
+    }
+
+    @Test
+    public void testAddingProductIncreasesQuantity() {
+        Invoice invoice = new Invoice();
+        Product product = new OtherProduct("Opona", new BigDecimal("100.0"));
+
+        invoice.addProduct(product, 1);
+        invoice.addProduct(product, 3);
+
+        assertThat(invoice.getProducts().get(product), is(4));
+    }
+
+    @Test
+    public void testInvoiceFormattingOfAmounts() {
+        invoice.addProduct(new TaxFreeProduct("Bułka", new BigDecimal("1")), 1);
+        invoice.addProduct(new DairyProduct("Jogurt", new BigDecimal("2.8")), 1);
+        invoice.addProduct(new OtherProduct("Zeszyt", new BigDecimal("6.5")), 1);
+
+        String invoiceDetails = new InvoicePrinter(invoice).printInvoice();
+
+        Pattern pattern = Pattern.compile("Cena brutto: \\d+\\.\\d{2}");
+        Matcher matcher = pattern.matcher(invoiceDetails);
+
+        assertThat(matcher.find(), is(true));
     }
 }

@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import pl.edu.agh.mwo.invoice.product.Product;
 
+import static org.hamcrest.Matchers.comparesEqualTo;
+
 public class ProductTest {
     @Test
     public void testProductNameIsCorrect() {
@@ -18,21 +20,21 @@ public class ProductTest {
     @Test
     public void testProductPriceAndTaxWithDefaultTax() {
         Product product = new OtherProduct("Ogorki", new BigDecimal("100.0"));
-        Assert.assertThat(new BigDecimal("100"), Matchers.comparesEqualTo(product.getPrice()));
-        Assert.assertThat(new BigDecimal("0.23"), Matchers.comparesEqualTo(product.getTaxPercent()));
+        Assert.assertThat(new BigDecimal("100"), comparesEqualTo(product.getPrice()));
+        Assert.assertThat(new BigDecimal("0.23"), comparesEqualTo(product.getTaxPercent()));
     }
 
     @Test
     public void testProductPriceAndTaxWithDairyProduct() {
         Product product = new DairyProduct("Szarlotka", new BigDecimal("100.0"));
-        Assert.assertThat(new BigDecimal("100"), Matchers.comparesEqualTo(product.getPrice()));
-        Assert.assertThat(new BigDecimal("0.08"), Matchers.comparesEqualTo(product.getTaxPercent()));
+        Assert.assertThat(new BigDecimal("100"), comparesEqualTo(product.getPrice()));
+        Assert.assertThat(new BigDecimal("0.08"), comparesEqualTo(product.getTaxPercent()));
     }
 
     @Test
     public void testPriceWithTax() {
         Product product = new DairyProduct("Oscypek", new BigDecimal("100.0"));
-        Assert.assertThat(new BigDecimal("108"), Matchers.comparesEqualTo(product.getPriceWithTax()));
+        Assert.assertThat(new BigDecimal("108"), comparesEqualTo(product.getPriceWithTax()));
     }
 
     @Test(expected = IllegalArgumentException.class)
