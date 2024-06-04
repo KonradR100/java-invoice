@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Map;
 public class InvoicePrinter {
 
-    private Invoice invoice;
+    public Invoice invoice;
     public InvoicePrinter(Invoice invoice){
         this.invoice = invoice;
     }
