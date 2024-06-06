@@ -5,12 +5,15 @@ import pl.edu.agh.mwo.invoice.product.Product;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Map;
+
 public class InvoicePrinter {
 
     public Invoice invoice;
-    public InvoicePrinter(Invoice invoice){
+
+    public InvoicePrinter(Invoice invoice) {
         this.invoice = invoice;
     }
+
     public String invoiceNumber() {
         return "Numer faktury: " + invoice.getNumber() + "\n\n";
     }
